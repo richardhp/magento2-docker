@@ -45,8 +45,15 @@ RUN mkdir -p /magento
 RUN composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.3 /magento
 
 WORKDIR /magento
+
+RUN composer config --no-plugins allow-plugins.laminas/laminas-dependency-plugin true
+RUN composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+RUN composer config --no-plugins allow-plugins.magento/composer-dependency-version-audit-plugin true
+RUN composer config --no-plugins allow-plugins.magento/composer-root-update-plugin true
+RUN composer config --no-plugins allow-plugins.magento/inventory-composer-installer true
+RUN composer config --no-plugins allow-plugins.magento/magento-composer-installer true
+
+RUN cat composer.json
 RUN composer install
-
 RUN mkdir -p /app
-
-RUN ls /magento
+RUN /magento/bin/magento install
