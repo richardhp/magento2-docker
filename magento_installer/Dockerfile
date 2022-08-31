@@ -55,5 +55,5 @@ RUN composer config --no-plugins allow-plugins.magento/magento-composer-installe
 
 RUN cat composer.json
 RUN composer install
-RUN mkdir -p /app
-RUN /magento/bin/magento install
+WORKDIR /magento/bin
+ENTRYPOINT ["./magento setup:install"]

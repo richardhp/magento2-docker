@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+
+  magento_installer:
+    build: 
+      context: ./magento_installer
+      args:
+        - MAGENTO_PUBLIC_KEY=$MAGENTO_PUBLIC_KEY
+        - MAGENTO_PRIVATE_KEY=$MAGENTO_PRIVATE_KEY
