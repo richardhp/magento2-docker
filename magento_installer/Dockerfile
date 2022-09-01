@@ -27,6 +27,7 @@ RUN docker-php-ext-install zip
 RUN docker-php-ext-install soap
 RUN docker-php-ext-install xsl
 RUN docker-php-ext-install sockets
+RUN docker-php-ext-install bcmath
 
 ##
 ## Install Magento2
@@ -53,7 +54,5 @@ RUN composer config --no-plugins allow-plugins.magento/composer-root-update-plug
 RUN composer config --no-plugins allow-plugins.magento/inventory-composer-installer true
 RUN composer config --no-plugins allow-plugins.magento/magento-composer-installer true
 
-RUN cat composer.json
 RUN composer install
 WORKDIR /magento/bin
-ENTRYPOINT ["./magento setup:install"]

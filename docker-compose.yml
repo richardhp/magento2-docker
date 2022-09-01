@@ -2,9 +2,33 @@ version: '3.4'
 
 services:
 
+  magento_db:
+    container_name: magento_db
+    image: mariadb:10.4
+    restart: "always"
+    environment:
+      - MARIADB_DATABASE=magento_db
+      - MARIADB_USER=$MAGENTO_DB_USER
+      - MARIADB_PASSWORD=$MAGENTO_DB_PASSWORD
+      - MARIADB_ROOT_PASSWORD=$MAGENTO_DB_ROOT_PASSWORD
+
+  adminer:
+    container_name: adminer
+    image: adminer
+
+
   magento_installer:
     build: 
       context: ./magento_installer
       args:
         - MAGENTO_PUBLIC_KEY=$MAGENTO_PUBLIC_KEY
         - MAGENTO_PRIVATE_KEY=$MAGENTO_PRIVATE_KEY
+    restart: "no"
+    command: ./magento setup:install --db-host=magento_db --db-name=magento_db --db-user=$MAGENTO_DB_USER --db-password=$MAGENTO_DB_PASSWORD --admin-firstname=Magento --admin-lastname=User --admin-email=test@exampl.com  --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 
+    depends_on:
+      - magento_db
+    mem_limit: 100g
+    environment:
+      - COMPOSER_MEMORY_LIMIT=-1
+# --search-engine=elasticsearch7 --elasticsearch-host=localhost 
+# --elasticsearch-port=9200
