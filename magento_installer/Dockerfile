@@ -56,3 +56,5 @@ RUN composer config --no-plugins allow-plugins.magento/magento-composer-installe
 
 RUN composer install
 WORKDIR /magento/bin
+
+RUN echo "memory_limit = 1024M\n" > /usr/local/etc/php/php.ini

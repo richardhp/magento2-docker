@@ -30,10 +30,12 @@ The Dockerfile will install the Magento2 package to the ```/magento``` folder in
 
 Now the installer is ready, time to perform the installation.
 
-You have to start the magento_db service, then you can run the installer
+You have to start the magento_db service, then you can run the installer.
+
+We must run in compatibility mode to avoid memory limits.
 
 ```bash
 docker-compose up -d magento_db
-docker-compose run magento_installer
+docker-compose --compatibility run magento_installer
 ```
 
