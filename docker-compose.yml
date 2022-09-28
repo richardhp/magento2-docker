@@ -11,6 +11,8 @@ services:
       - MARIADB_USER=$MAGENTO_DB_USER
       - MARIADB_PASSWORD=$MAGENTO_DB_PASSWORD
       - MARIADB_ROOT_PASSWORD=$MAGENTO_DB_ROOT_PASSWORD
+    volumes:
+      - ./docker-data/mariadb:/var/lib/mysql
 
   magento_elastic_search:
     container_name: magento_elastic_search
@@ -24,6 +26,8 @@ services:
     # tty: true       
     # command: bash
     command: bin/elasticsearch
+    volumes:
+      - ./docker-data/elasticsearch:/usr/share/elasticsearch/data
 
   magento_adminer:
     container_name: magento_adminer

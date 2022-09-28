@@ -35,7 +35,7 @@ You have to start the magento_db service, then you can run the installer.
 We must run in compatibility mode to avoid memory limits.
 
 ```bash
-docker-compose up -d magento_db
+docker-compose up magento_db magento_elastic_search
 docker-compose --compatibility run magento_installer
 ```
 
