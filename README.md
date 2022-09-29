@@ -82,14 +82,34 @@ docker-compose --compatibility run magento_installer
 Now you can extract the files.  Edit the docker-compose file to expose the mounts:
 
 ```yaml
-  command: cp -R /magento /tmp/magento
+  command: tar cvf /tmp/magento/magento.tar /magento
   volumes:
-    - ./src:/tmp/magento
+    - ./magento:/tmp/magento
 ```
 
-And boom, you have the magento installed.
+And boom, you have a fresh magento install as a tarball in this directory.
 
 ## Mount your source code into a php container
 
 Magento setup process is done, so we can now edit the source code, and mount this into the deployment container to see it working.
 
+To do this, extract the tarball into the ./src folder:
+
+```bash
+tar xvf ./magento/magento.tar -C ./src
+```
+
+```yaml
+  volumes:
+    - ./src/magento:/var/www/html
+```
+
+Don't need a command now, apache entrypoint will do.
+
+You can also start the entire folder with this command:
+
+```bash
+docker-compose up -d
+```
+
+Must use daemon mode or apache will complain
