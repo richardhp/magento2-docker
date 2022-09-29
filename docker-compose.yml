@@ -22,17 +22,21 @@ services:
       - 9300:9300
     environment:
       - discovery.type=single-node
+      - xpack.security.enabled=false
     # stdin_open: true
     # tty: true       
     # command: bash
     command: bin/elasticsearch
     volumes:
       - ./docker-data/elasticsearch:/usr/share/elasticsearch/data
+      - ./docker-data/elasticsearch-tmp:/tmp
+
 
   magento_adminer:
     container_name: magento_adminer
     image: adminer
-
+    ports:
+      - 8080:8080
 
   magento_installer:
     build: 
@@ -44,15 +48,16 @@ services:
     # stdin_open: true
     # tty: true       
     # command: bash
-    command: ./magento setup:install --db-host=magento_db --db-name=magento_db --db-user=$MAGENTO_DB_USER --db-password=$MAGENTO_DB_PASSWORD --admin-firstname=Magento --admin-lastname=User --admin-email=test@exampl.com  --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=magento_elastic_search --elasticsearch-port=9200
+    command: ./magento setup:install --db-host=magento_db --db-name=magento_db --db-user=$MAGENTO_DB_USER --db-password=$MAGENTO_DB_PASSWORD --admin-firstname=Magento --admin-lastname=User --admin-email=test@exampl.com  --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=magento_elastic_search --elasticsearch-port=9200 --elasticsearch-enable-auth=false
     depends_on:
       - magento_db
+      - magento_elastic_search
     # Note - run this in compatibility mode
     deploy:
       resources:
         limits:
-          cpus: '0.50'
-          memory: 50M
+          cpus: '1'
+          memory: 500M
     environment:
       - COMPOSER_MEMORY_LIMIT=10M
 

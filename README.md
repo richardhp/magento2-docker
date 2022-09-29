@@ -30,12 +30,50 @@ The Dockerfile will install the Magento2 package to the ```/magento``` folder in
 
 Now the installer is ready, time to perform the installation.
 
-You have to start the magento_db service, then you can run the installer.
+You have to start the magento_db service and magento_elastic_search service, then you can run the installer.
 
 We must run in compatibility mode to avoid memory limits.
 
+## Maria DB
+
+First make sure the correct env vars are set.
+
+Run it like this:
+
 ```bash
-docker-compose up magento_db magento_elastic_search
+docker-compose up magento_db
+```
+
+## Elastic Search
+
+Spin up the container first:
+
+```bash
+docker-compose up magento_elastic_search
+```
+
+Then get the container name using ```docker ps```.
+
+Then jump into that container with an sh terminal:
+
+```bash
+docker exec -ti [CONTAINER_ID] sh
+```
+
+And run this command:
+
+```
+./bin/elasticsearch-reset-password -u elastic
+```
+
+And copy that password into your env file.
+
+## Installation
+
+Once all the services are set up and configured, you can run the installer like so:
+
+```bash
+docker-compose up magento_db magento_elastic_search magento_adminer
 docker-compose --compatibility run magento_installer
 ```
 
