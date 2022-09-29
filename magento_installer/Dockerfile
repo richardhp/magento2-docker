@@ -1,5 +1,4 @@
-FROM php:7.4 as builder
-# To build this:docker build -t magento2 . --build-arg MAGENTO_PUBLIC_KEY=abc --build-arg MAGENTO_PRIVATE_KEY=abc
+FROM php:7.4-apache as builder
 
 ##
 ## Install composer
@@ -55,6 +54,5 @@ RUN composer config --no-plugins allow-plugins.magento/inventory-composer-instal
 RUN composer config --no-plugins allow-plugins.magento/magento-composer-installer true
 
 RUN composer install
-WORKDIR /magento/bin
 
 RUN echo "memory_limit = 1024M\n" > /usr/local/etc/php/php.ini

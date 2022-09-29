@@ -77,3 +77,19 @@ docker-compose up magento_db magento_elastic_search magento_adminer
 docker-compose --compatibility run magento_installer
 ```
 
+## Extract Magento
+
+Now you can extract the files.  Edit the docker-compose file to expose the mounts:
+
+```yaml
+  command: cp -R /magento /tmp/magento
+  volumes:
+    - ./src:/tmp/magento
+```
+
+And boom, you have the magento installed.
+
+## Mount your source code into a php container
+
+Magento setup process is done, so we can now edit the source code, and mount this into the deployment container to see it working.
+
