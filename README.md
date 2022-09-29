@@ -52,6 +52,10 @@ Spin up the container first:
 docker-compose up magento_elastic_search
 ```
 
+### If you want auth
+
+NOTE - could not get auth working.
+
 Then get the container name using ```docker ps```.
 
 Then jump into that container with an sh terminal:
