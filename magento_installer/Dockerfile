@@ -19,6 +19,7 @@ RUN apt install -y libzip-dev zip libgd-dev libicu-dev libsodium-dev libpng-dev 
 RUN touch /usr/local/etc/php/php.ini
 
 RUN docker-php-ext-install sodium
+RUN docker-php-ext-configure gd --with-jpeg
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install intl
 RUN docker-php-ext-install pdo_mysql
@@ -42,7 +43,7 @@ RUN echo "{ \"http-basic\": { \"repo.magento.com\": { \"username\": \"$MAGENTO_P
 # This is the install dir
 RUN php --ini
 RUN mkdir -p /magento
-RUN composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.3 /magento
+RUN composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.5 /magento
 
 WORKDIR /magento
 
@@ -55,4 +56,4 @@ RUN composer config --no-plugins allow-plugins.magento/magento-composer-installe
 
 RUN composer install
 
-RUN echo "memory_limit = 1024M\n" > /usr/local/etc/php/php.ini
+RUN echo "memory_limit = 2048M\n" > /usr/local/etc/php/php.ini
