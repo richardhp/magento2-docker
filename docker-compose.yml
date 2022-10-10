@@ -23,14 +23,11 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
-    # stdin_open: true
-    # tty: true       
-    # command: bash
     command: bin/elasticsearch
+    # command: bin/elasticsearch-reset-password -u elastic
     volumes:
       - ./docker-data/elasticsearch:/usr/share/elasticsearch/data
       - ./docker-data/elasticsearch-tmp:/tmp
-
 
   magento_adminer:
     container_name: magento_adminer
@@ -53,7 +50,7 @@ services:
     #  - ./magento:/tmp/magento
     # Phase 3 - Deploy
     volumes:
-      - ./src/magento:/var/www/html
+      - ./src/magento:/var/www/html/magento
     depends_on:
       - magento_db
       - magento_elastic_search

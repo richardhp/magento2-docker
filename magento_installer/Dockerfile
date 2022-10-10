@@ -57,3 +57,7 @@ RUN composer config --no-plugins allow-plugins.magento/magento-composer-installe
 RUN composer install
 
 RUN echo "memory_limit = 2048M\n" > /usr/local/etc/php/php.ini
+
+COPY 000-default.conf /etc/apache2/sites-available
+
+RUN a2enmod rewrite
