@@ -42,10 +42,6 @@ RUN echo "{ \"http-basic\": { \"repo.magento.com\": { \"username\": \"$MAGENTO_P
 
 # This is the install dir
 RUN php --ini
-RUN mkdir -p /magento
-RUN composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.5 /magento
-
-WORKDIR /magento
 
 RUN composer config --no-plugins allow-plugins.laminas/laminas-dependency-plugin true
 RUN composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
@@ -54,10 +50,13 @@ RUN composer config --no-plugins allow-plugins.magento/composer-root-update-plug
 RUN composer config --no-plugins allow-plugins.magento/inventory-composer-installer true
 RUN composer config --no-plugins allow-plugins.magento/magento-composer-installer true
 
-RUN composer install
-
 RUN echo "memory_limit = 2048M\n" > /usr/local/etc/php/php.ini
 
 COPY 000-default.conf /etc/apache2/sites-available
 
 RUN a2enmod rewrite
+
+WORKDIR /var/www/html
+
+RUN composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.5 .
+RUN composer install

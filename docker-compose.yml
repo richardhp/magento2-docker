@@ -35,25 +35,30 @@ services:
     ports:
       - 8080:8080
 
-  magento_installer:
+  magento:
     build: 
-      context: ./magento_installer
+      context: ./magento
       args:
         - MAGENTO_PUBLIC_KEY=$MAGENTO_PUBLIC_KEY
         - MAGENTO_PRIVATE_KEY=$MAGENTO_PRIVATE_KEY
     restart: "no"
-    # Phase 1 - Setup
-    # command: ./bin/magento setup:install --db-host=magento_db --db-name=magento_db --db-user=$MAGENTO_DB_USER --db-password=$MAGENTO_DB_PASSWORD --admin-firstname=Magento --admin-lastname=User --admin-email=test@exampl.com  --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=magento_elastic_search --elasticsearch-port=9200 --elasticsearch-enable-auth=false
-    # Phase 2 - Extract
-    # command: tar cvf /tmp/magento/magento.tar /magento
-    # volumes:
-    #  - ./magento:/tmp/magento
-    # Phase 3 - Deploy
+    # tty: true
+    # stdin_open: true
+    # command: sh
+    # Phase 1 - Initialise 
+    #command: composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.5 .
+    # Phase 2 - Install
+    # command: composer install
+    # Phase 3 - Setup
+    # command: ./bin/magento setup:install --db-host=magento_db --db-name=magento_db --db-user=$MAGENTO_DB_USER --db-password=$MAGENTO_DB_PASSWORD --admin-firstname=Magento --admin-lastname=User --admin-email=test@example.com  --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=magento_elastic_search --elasticsearch-port=9200 --elasticsearch-enable-auth=false
     volumes:
-      - ./src/magento:/var/www/html/magento
+      - ./src:/var/www/html
     depends_on:
       - magento_db
       - magento_elastic_search
+    environment:
+      - MAGENTO_DB_USER=$MAGENTO_DB_USER
+      - MAGENTO_DB_PASSWORD=$MAGENTO_DB_PASSWORD
     # Note - run this in compatibility mode
     deploy:
       resources:
