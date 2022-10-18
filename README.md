@@ -78,7 +78,7 @@ Once all the services are set up and configured, you can run the installer like 
 
 ```bash
 docker-compose up magento_db magento_elastic_search magento_adminer
-docker-compose --compatibility run magento_installer
+docker-compose --compatibility run magento
 ```
 
 ## Extract Magento

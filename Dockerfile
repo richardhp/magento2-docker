@@ -60,3 +60,4 @@ WORKDIR /var/www/html
 
 RUN composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.5 .
 RUN composer install
+RUN rm /root/.composer/auth.json
