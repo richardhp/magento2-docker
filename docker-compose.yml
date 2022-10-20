@@ -41,6 +41,7 @@ services:
       args:
         - MAGENTO_PUBLIC_KEY=$MAGENTO_PUBLIC_KEY
         - MAGENTO_PRIVATE_KEY=$MAGENTO_PRIVATE_KEY
+        - MAGENTO_VERSION=$MAGENTO_VERSION
     restart: "no"
     # tty: true
     # stdin_open: true

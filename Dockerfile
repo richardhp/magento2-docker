@@ -33,6 +33,7 @@ RUN docker-php-ext-install bcmath
 ## Install Magento2
 ARG MAGENTO_PUBLIC_KEY
 ARG MAGENTO_PRIVATE_KEY
+ARG MAGENTO_VERSION
 
 # Auth keys
 WORKDIR /root/.composer
@@ -58,6 +59,7 @@ RUN a2enmod rewrite
 
 WORKDIR /var/www/html
 
-RUN composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.5 .
+RUN composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=$MAGENTO_VERSION .
 RUN composer install
 RUN rm /root/.composer/auth.json
+RUN chown -R www-data:www-data /var/www/html
