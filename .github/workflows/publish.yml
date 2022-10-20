@@ -38,5 +38,6 @@ jobs:
             MAGENTO_PUBLIC_KEY=${{ secrets.MAGENTO_PUBLIC_KEY }}
             MAGENTO_PRIVATE_KEY=${{ secrets.MAGENTO_PRIVATE_KEY }}
             MAGENTO_VERSION=2.4.1
+            COMPOSER_VERSION=1
 
       # TODO - add nginx build

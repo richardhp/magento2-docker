@@ -17,9 +17,9 @@ services:
   magento_elastic_search:
     container_name: magento_elastic_search
     image: elasticsearch:8.4.2
-    ports:
-      - 9200:9200 
-      - 9300:9300
+    # ports:
+    #   - 9200:9200 
+    #   - 9300:9300
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
@@ -42,18 +42,19 @@ services:
         - MAGENTO_PUBLIC_KEY=$MAGENTO_PUBLIC_KEY
         - MAGENTO_PRIVATE_KEY=$MAGENTO_PRIVATE_KEY
         - MAGENTO_VERSION=$MAGENTO_VERSION
+        - COMPOSER_VERSION=$COMPOSER_VERSION
     restart: "no"
-    # tty: true
-    # stdin_open: true
-    # command: sh
+    tty: true
+    stdin_open: true
+    command: bash
     # Phase 1 - Initialise 
     #command: composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.5 .
     # Phase 2 - Install
     # command: composer install
     # Phase 3 - Setup
     # command: ./bin/magento setup:install --db-host=magento_db --db-name=magento_db --db-user=$MAGENTO_DB_USER --db-password=$MAGENTO_DB_PASSWORD --admin-firstname=Magento --admin-lastname=User --admin-email=test@example.com  --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=magento_elastic_search --elasticsearch-port=9200 --elasticsearch-enable-auth=false
-    volumes:
-      - ./src:/var/www/html
+    # volumes:
+    #   - ./src:/var/www/html
     depends_on:
       - magento_db
       - magento_elastic_search
@@ -66,6 +67,6 @@ services:
         limits:
           cpus: '1'
           memory: 500M
-    ports:
-      - 8000:80
+    # ports:
+    #   - 8000:80
 
