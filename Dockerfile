@@ -37,7 +37,7 @@ RUN docker-php-ext-install bcmath
 
 # This is the install dir
 RUN php --ini
-RUN echo "memory_limit = 2048M\n" > /usr/local/etc/php/php.ini
+RUN echo "memory_limit = 4096M\n" > /usr/local/etc/php/php.ini
 
 COPY 000-default.conf /etc/apache2/sites-available
 RUN a2enmod rewrite
