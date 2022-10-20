@@ -67,3 +67,4 @@ RUN if [ "$COMPOSER_VERSION" == "2" ]; then composer config --no-plugins allow-p
 
 RUN composer install
 RUN rm $AUTH_FILE_LOCATION
+RUN chmod -R 777 generated/
