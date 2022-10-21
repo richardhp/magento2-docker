@@ -25,7 +25,7 @@ RUN apt install -y libzip-dev zip libgd-dev libicu-dev libsodium-dev libpng-dev 
 RUN touch /usr/local/etc/php/php.ini
 
 RUN docker-php-ext-install sodium
-RUN docker-php-ext-configure gd --with-jpeg
+RUN docker-php-ext-configure gd --with-jpeg --with-freetype
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install intl
 RUN docker-php-ext-install pdo_mysql
